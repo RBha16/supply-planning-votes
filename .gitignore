@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+votes.json
+_deploy.py
+_deploy2.py
+app.yaml

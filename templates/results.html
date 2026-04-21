@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results — Future of Supply Planning Ratings</title>
+<style>
+  :root {
+    --bg: #111111;
+    --surface: #1a1a1a;
+    --card: #1e1e1e;
+    --border: #333333;
+    --border-light: #444444;
+    --text: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --text-dim: #777777;
+    --nike-orange: #ff6b35;
+    --nike-orange-dim: rgba(255,107,53,0.15);
+    --accent-blue: #4ea8de;
+    --accent-green: #57cc99;
+    --accent-yellow: #ffd166;
+    --accent-red: #ef476f;
+    --accent-purple: #b185db;
+    --accent-teal: #48bfe3;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --score-1: #ef476f;
+    --score-2: #f4845f;
+    --score-3: #ffd166;
+    --score-4: #83c5be;
+    --score-5: #57cc99;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #111 50%, #1a1a1a 100%);
+    border-bottom: 2px solid var(--nike-orange); padding: 1.5rem 2.5rem; position: relative;
+  }
+  header::before {
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(ellipse at 80% 50%,rgba(255,107,53,0.06) 0%,transparent 60%);pointer-events:none;
+  }
+  .header-badge { font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--nike-orange);font-weight:700;margin-bottom:0.3rem;position:relative; }
+  .header-row { display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:relative; }
+  header h1 { font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;position:relative; }
+  header h1 span { color:var(--nike-orange); }
+  .header-sub { font-size:0.82rem;color:var(--text-secondary);margin-top:0.25rem;position:relative; }
+  .header-controls { display:flex;align-items:center;gap:1rem;position:relative;flex-wrap:wrap; }
+  .refresh-info { font-size:0.68rem;color:var(--text-dim);display:flex;align-items:center;gap:0.4rem; }
+  .refresh-dot { width:8px;height:8px;border-radius:50%;background:var(--accent-green);animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .export-btn {
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+    color:var(--text-secondary);padding:0.4rem 0.85rem;font-size:0.75rem;font-weight:600;
+    cursor:pointer;transition:all 0.15s;
+  }
+  .export-btn:hover { border-color:var(--nike-orange);color:var(--nike-orange); }
+  .container { max-width:1400px;margin:0 auto;padding:1.5rem 2rem 3rem; }
+  .participants-bar { display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.5rem; }
+  .participants-bar .label { font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);font-weight:600; }
+  .participant-chip {
+    display:inline-flex;align-items:center;gap:0.3rem;padding:0.25rem 0.7rem;border-radius:999px;
+    font-size:0.75rem;font-weight:600;background:var(--nike-orange-dim);color:var(--nike-orange);
+    border:1px solid rgba(255,107,53,0.25);
+  }
+  .summary-kpis { display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.85rem;margin-bottom:2rem; }
+  .kpi { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;text-align:center; }
+  .kpi-val { font-size:1.8rem;font-weight:800;line-height:1.1; }
+  .kpi-lbl { font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.3rem; }
+  .tabs { display:flex;gap:0;margin-bottom:1.5rem;background:var(--surface);border-radius:var(--radius);padding:4px;border:1px solid var(--border); }
+  .tab-btn {
+    flex:1;padding:0.7rem 1rem;background:transparent;border:none;color:var(--text-dim);
+    font-size:0.85rem;font-weight:600;cursor:pointer;border-radius:var(--radius-sm);
+    transition:all 0.25s;text-align:center;
+  }
+  .tab-btn:hover { color:var(--text-secondary); }
+  .tab-btn.active { background:var(--nike-orange);color:#fff;box-shadow:0 2px 12px rgba(255,107,53,0.3); }
+  .tab-content { display:none; } .tab-content.active { display:block; }
+  .sort-bar { display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;flex-wrap:wrap; }
+  .sort-bar .label { font-size:0.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;font-weight:600; }
+  .sort-pill {
+    font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:999px;background:var(--card);
+    color:var(--text-dim);border:1px solid var(--border);cursor:pointer;font-weight:600;transition:all 0.15s;
+  }
+  .sort-pill:hover { border-color:var(--nike-orange);color:var(--text-secondary); }
+  .sort-pill.active { background:var(--nike-orange-dim);color:var(--nike-orange);border-color:var(--nike-orange); }
+  .result-list { display:grid; gap:0.6rem; }
+  .result-item {
+    display:grid;grid-template-columns:50px 1fr 200px 80px;align-items:center;gap:1rem;
+    padding:0.85rem 1.25rem;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-sm);transition:all 0.15s;
+  }
+  .result-item:hover { border-color:var(--border-light);background:var(--card); }
+  .result-rank {
+    width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-size:0.95rem;font-weight:800;
+  }
+  .rank-gold { background:rgba(255,209,102,0.15);color:var(--accent-yellow); }
+  .rank-silver { background:rgba(160,160,160,0.12);color:#bbb; }
+  .rank-bronze { background:rgba(205,127,50,0.12);color:#cd7f32; }
+  .rank-normal { background:var(--card);color:var(--text-dim); }
+  .result-name { font-size:0.88rem;font-weight:600; }
+  .result-bucket { font-size:0.68rem;color:var(--text-dim);margin-top:0.1rem; }
+  .score-bar-wrap { display:flex;align-items:center;gap:0.6rem; }
+  .score-bar-track { flex:1;height:22px;background:var(--card);border-radius:4px;overflow:hidden;position:relative; }
+  .score-bar-fill { height:100%;border-radius:4px;transition:width 0.4s ease;display:flex;align-items:center;padding-left:6px;font-size:0.6rem;font-weight:700;color:#111; }
+  .score-distribution {
+    display:flex;gap:2px;font-size:0.58rem;color:var(--text-dim);
+  }
+  .score-distribution span { padding:0 2px; }
+  .result-score { text-align:center; }
+  .score-avg { font-size:1.3rem;font-weight:800; }
+  .score-label { font-size:0.6rem;color:var(--text-dim);text-transform:uppercase; }
+
+  .consensus-grid { display:grid;grid-template-columns:1fr 1fr;gap:1.25rem; }
+  @media(max-width:768px) { .consensus-grid { grid-template-columns:1fr; } }
+  .consensus-card { background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem; }
+  .consensus-card h4 { font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:0.75rem;padding-bottom:0.35rem;border-bottom:1px solid var(--border); }
+  .consensus-card h4.green { color:var(--accent-green); }
+  .consensus-card h4.red { color:var(--accent-red); }
+  .consensus-card h4.yellow { color:var(--accent-yellow); }
+  .consensus-card h4.blue { color:var(--accent-blue); }
+  .consensus-item { display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;font-size:0.8rem;border-bottom:1px solid rgba(51,51,51,0.5); }
+  .consensus-item:last-child { border-bottom:none; }
+  .consensus-item .ci-score { width:40px;text-align:center;font-weight:800;font-size:0.78rem;flex-shrink:0; }
+  .consensus-item .ci-name { flex:1; }
+  .consensus-item .ci-extra { font-size:0.68rem;color:var(--text-dim);flex-shrink:0; }
+  .per-person-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem; }
+  .person-card { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.15rem; }
+  .person-card h4 { font-size:0.9rem;font-weight:700;margin-bottom:0.1rem;display:flex;align-items:center;gap:0.4rem; }
+  .person-card .person-time { font-size:0.68rem;color:var(--text-dim);margin-bottom:0.75rem; }
+  .person-stat { display:flex;gap:1rem;margin-bottom:0.5rem; }
+  .person-stat .ps { text-align:center;flex:1; }
+  .person-stat .ps-val { font-size:1.3rem;font-weight:800; }
+  .person-stat .ps-lbl { font-size:0.6rem;color:var(--text-dim);text-transform:uppercase; }
+  .empty-state { text-align:center;padding:4rem 2rem;color:var(--text-dim); }
+  .empty-state .icon { font-size:3rem;margin-bottom:1rem; }
+  .empty-state h3 { font-size:1.1rem;color:var(--text-secondary);margin-bottom:0.5rem; }
+  .loading-spinner {
+    display:inline-block;width:18px;height:18px;border:2px solid var(--border);
+    border-top-color:var(--nike-orange);border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:0.5rem;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  footer { text-align:center;padding:2rem;font-size:0.72rem;color:var(--text-dim);border-top:1px solid var(--border); }
+  @media(max-width:900px) { .result-item { grid-template-columns:40px 1fr 140px 60px;gap:0.5rem;padding:0.7rem 0.85rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Supply Planning Workshop &mdash; Facilitator Dashboard</div>
+  <div class="header-row">
+    <div>
+      <h1>Impact <span>Ratings</span></h1>
+      <div class="header-sub">Live results &mdash; auto-refreshes every 15 seconds</div>
+    </div>
+    <div class="header-controls">
+      <div class="refresh-info"><div class="refresh-dot"></div><span id="refreshLabel">Loading...</span></div>
+      <button class="export-btn" onclick="exportCSV()">&#8681; Export CSV</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div id="resultsArea" style="display:none;">
+    <div class="participants-bar" id="participantsBar"><span class="label">Participants:</span></div>
+    <div class="summary-kpis" id="summaryKpis"></div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('ranked')">Ranked by Impact</button>
+      <button class="tab-btn" onclick="switchTab('consensus')">Consensus Analysis</button>
+      <button class="tab-btn" onclick="switchTab('people')">Per-Person View</button>
+    </div>
+    <div id="tab-ranked" class="tab-content active">
+      <div class="sort-bar">
+        <span class="label">View:</span>
+        <span class="sort-pill active" onclick="setView(this,'all')">All Items</span>
+        <span class="sort-pill" onclick="setView(this,'requirements')">Requirements Only</span>
+        <span class="sort-pill" onclick="setView(this,'opportunities')">Opportunities Only</span>
+        <span class="label" style="margin-left:1rem;">Sort:</span>
+        <span class="sort-pill active" data-sort onclick="setSort(this,'avg')">Avg Score</span>
+        <span class="sort-pill" data-sort onclick="setSort(this,'spread')">Most Spread</span>
+        <span class="sort-pill" data-sort onclick="setSort(this,'low')">Lowest Rated</span>
+      </div>
+      <div class="result-list" id="resultList"></div>
+    </div>
+    <div id="tab-consensus" class="tab-content"><div class="consensus-grid" id="consensusGrid"></div></div>
+    <div id="tab-people" class="tab-content"><div class="per-person-grid" id="personGrid"></div></div>
+  </div>
+  <div class="empty-state" id="emptyState">
+    <div class="icon"><div class="loading-spinner"></div></div>
+    <h3>Waiting for ratings...</h3>
+    <p>Results will appear here automatically as participants submit</p>
+  </div>
+</div>
+
+<footer>Nike Supply Planning Workshop &bull; Impact Ratings Dashboard &bull; April 2026 &bull; For Internal Use Only</footer>
+
+<script>
+const ITEM_CATALOG = {
+  'req-engine-1':{name:'Multi-Model Solver Supporting All Business Types',bucket:'Planning Engine'},
+  'req-engine-2':{name:'Configurable Planning Logic Beyond JIT',bucket:'Planning Engine'},
+  'req-engine-3':{name:'Capacity-Aware Constrained Production Planning',bucket:'Planning Engine'},
+  'req-engine-4':{name:'Demand Prioritization Engine',bucket:'Planning Engine'},
+  'req-engine-5':{name:'Independent Supply Plan (Decoupled from Demand)',bucket:'Planning Engine'},
+  'req-engine-6':{name:'Supply Shaping Actions (Prebuild, Re-Phase, Defer)',bucket:'Planning Engine'},
+  'req-engine-7':{name:'Global Consistency with Local Flexibility',bucket:'Planning Engine'},
+  'req-scenario-1':{name:'What-If Scenario Modeling',bucket:'Scenario Planning'},
+  'req-scenario-2':{name:'Side-by-Side Scenario Comparison',bucket:'Scenario Planning'},
+  'req-scenario-3':{name:'Digital Twin of the Supply Network',bucket:'Scenario Planning'},
+  'req-scenario-4':{name:'Historical Supply Plan Capture & Versioning',bucket:'Scenario Planning'},
+  'req-scenario-5':{name:'Integrated Biz Sim Within Ecosystem',bucket:'Scenario Planning'},
+  'req-integration-1':{name:'Bidirectional FG-to-Materials Planning',bucket:'Integration'},
+  'req-integration-2':{name:'T2 Material Constraints & Commitments',bucket:'Integration'},
+  'req-integration-3':{name:'Seasonal + Quarterly Planning Alignment',bucket:'Integration'},
+  'req-integration-4':{name:'Assortment Plan as First-Class Input',bucket:'Integration'},
+  'req-integration-5':{name:'Buffer Targets (MEIO) Integration',bucket:'Integration'},
+  'req-integration-6':{name:'Downstream System Integration (PO, Contracts)',bucket:'Integration'},
+  'req-data-1':{name:'Certified Data Foundation',bucket:'Data Foundation'},
+  'req-data-2':{name:'Semantic Layer with Governed Metrics',bucket:'Data Foundation'},
+  'req-data-3':{name:'Automated Data Quality Monitoring',bucket:'Data Foundation'},
+  'req-data-4':{name:'BOM Completeness Enforcement',bucket:'Data Foundation'},
+  'req-data-5':{name:'Simplified Data Creation & Maintenance',bucket:'Data Foundation'},
+  'req-exception-1':{name:'Proactive Exception Detection & Surfacing',bucket:'Exception Mgmt'},
+  'req-exception-2':{name:'AI-Driven Resolution Recommendations',bucket:'Exception Mgmt'},
+  'req-exception-3':{name:'Workflow-Driven Escalation Paths',bucket:'Exception Mgmt'},
+  'req-exception-4':{name:'Reduction of Manual System Touches',bucket:'Exception Mgmt'},
+  'req-exception-5':{name:'Top-Down / Bottom-Up Reconciliation',bucket:'Exception Mgmt'},
+  'req-collab-1':{name:'Dynamic Digital Factory Collaboration',bucket:'Collaboration'},
+  'req-collab-2':{name:'True Need Date Visibility for Partners',bucket:'Collaboration'},
+  'req-collab-3':{name:'Burst Report Modernization',bucket:'Collaboration'},
+  'req-collab-4':{name:'Landed Cost Visibility in Plans',bucket:'Collaboration'},
+  'req-collab-5':{name:'Postponed Production Allocation',bucket:'Collaboration'},
+  'req-analytics-1':{name:'Plan Explainability (AI-Powered)',bucket:'Analytics'},
+  'req-analytics-2':{name:'Comprehensive KPI Dashboards',bucket:'Analytics'},
+  'req-analytics-3':{name:'Trade-Off Visibility',bucket:'Analytics'},
+  'req-analytics-4':{name:'Self-Serve Insights for Non-Technical Users',bucket:'Analytics'},
+  'req-governance-1':{name:'Authoritative Plan Grid with Governed Metrics',bucket:'Governance'},
+  'req-governance-2':{name:'Insight & Decision Traceability',bucket:'Governance'},
+  'req-governance-3':{name:'Automated Validations & Sense-Checking',bucket:'Governance'},
+  'req-governance-4':{name:'Consumption Logic for Production Planning',bucket:'Governance'},
+  'req-ai-1':{name:'Continuous Learning from Plan Outcomes',bucket:'AI & Agentic'},
+  'req-ai-2':{name:'Proactive Orchestration',bucket:'AI & Agentic'},
+  'req-ai-3':{name:'Model & Agent Libraries',bucket:'AI & Agentic'},
+  'req-ai-4':{name:'Citizen Builder Enablement',bucket:'AI & Agentic'},
+  'req-platform-1':{name:'Modular, Composable Architecture',bucket:'Platform'},
+  'req-platform-2':{name:'Adaptable & Changeable Foundation',bucket:'Platform'},
+  'req-platform-3':{name:'Non-Disruptive Deployment & Go-Live',bucket:'Platform'},
+  'opp-1':{name:'AI-Powered Unplanned Resolution',bucket:'Opportunity',type:'opp'},
+  'opp-2':{name:'Booking Bubble Detection & Auto-Quarantine',bucket:'Opportunity',type:'opp'},
+  'opp-3':{name:'Exception Prioritization Dashboard',bucket:'Opportunity',type:'opp'},
+  'opp-4':{name:'Burst Report Signal-to-Noise Optimization',bucket:'Opportunity',type:'opp'},
+  'opp-5':{name:'BOM Completeness Tracker & Gates',bucket:'Opportunity',type:'opp'},
+  'opp-6':{name:'Lightweight Scenario Planning MVP',bucket:'Opportunity',type:'opp'},
+  'opp-7':{name:'Materials-to-FG Constraint Feedback Loop',bucket:'Opportunity',type:'opp'},
+  'opp-8':{name:'Product Segmentation for Differentiated Planning',bucket:'Opportunity',type:'opp'},
+  'opp-9':{name:'Plan vs. Forecast Reconciliation Tool',bucket:'Opportunity',type:'opp'},
+  'opp-10':{name:'Priority PO Planning with Buffer',bucket:'Opportunity',type:'opp'}
+};
+
+const SCORE_COLORS = ['','var(--score-1)','var(--score-2)','var(--score-3)','var(--score-4)','var(--score-5)'];
+
+let submissions = [];
+let currentView = 'all';
+let currentSort = 'avg';
+
+function avgColor(avg) {
+  if (avg >= 4.0) return 'var(--score-5)';
+  if (avg >= 3.5) return 'var(--score-4)';
+  if (avg >= 2.5) return 'var(--score-3)';
+  if (avg >= 1.5) return 'var(--score-2)';
+  return 'var(--score-1)';
+}
+
+async function loadVotes() {
+  try {
+    const resp = await fetch('/api/votes');
+    if (!resp.ok) throw new Error('Failed');
+    submissions = await resp.json();
+    document.getElementById('refreshLabel').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    renderAll();
+  } catch (err) {
+    document.getElementById('refreshLabel').textContent = 'Error \u2014 retrying...';
+  }
+}
+
+function renderAll() {
+  const area = document.getElementById('resultsArea');
+  const empty = document.getElementById('emptyState');
+  if (!submissions.length) { area.style.display='none'; empty.style.display='block'; return; }
+  area.style.display='block'; empty.style.display='none';
+  renderParticipants(); renderKPIs(); renderRanked(); renderConsensus(); renderPersonView();
+}
+
+function renderParticipants() {
+  const bar = document.getElementById('participantsBar');
+  bar.innerHTML = '<span class="label">Participants (' + submissions.length + '):</span>';
+  submissions.forEach(s => { bar.innerHTML += '<span class="participant-chip">' + esc(s.participant) + '</span>'; });
+}
+
+function getAggregated() {
+  const agg = {};
+  for (const [id, info] of Object.entries(ITEM_CATALOG)) {
+    agg[id] = { ...info, scores: [], total: submissions.length };
+  }
+  submissions.forEach(s => {
+    for (const [id, val] of Object.entries(s.votes)) {
+      if (agg[id]) agg[id].scores.push(typeof val === 'number' ? val : parseInt(val) || 3);
+    }
+  });
+  for (const a of Object.values(agg)) {
+    const n = a.scores.length || 1;
+    a.avg = a.scores.reduce((s,v) => s+v, 0) / n;
+    a.min = Math.min(...(a.scores.length ? a.scores : [3]));
+    a.max = Math.max(...(a.scores.length ? a.scores : [3]));
+    a.spread = a.max - a.min;
+    const mean = a.avg;
+    a.stddev = Math.sqrt(a.scores.reduce((s,v) => s + (v-mean)**2, 0) / n);
+    a.dist = [0,0,0,0,0];
+    a.scores.forEach(v => { if (v >= 1 && v <= 5) a.dist[v-1]++; });
+  }
+  return agg;
+}
+
+function renderKPIs() {
+  const agg = getAggregated();
+  const items = Object.values(agg);
+  const globalAvg = (items.reduce((s,i) => s+i.avg, 0) / items.length).toFixed(2);
+  const top = [...items].sort((a,b) => b.avg - a.avg)[0];
+  const highImpact = items.filter(i => i.avg >= 4.0).length;
+  const mostSpread = [...items].sort((a,b) => b.stddev - a.stddev)[0];
+  document.getElementById('summaryKpis').innerHTML =
+    '<div class="kpi"><div class="kpi-val" style="color:var(--nike-orange)">' + submissions.length + '</div><div class="kpi-lbl">Participants</div></div>' +
+    '<div class="kpi"><div class="kpi-val" style="color:var(--accent-blue)">' + globalAvg + '</div><div class="kpi-lbl">Overall Avg Score</div></div>' +
+    '<div class="kpi"><div class="kpi-val" style="color:var(--accent-green)">' + highImpact + '</div><div class="kpi-lbl">High Impact (4+)</div></div>' +
+    '<div class="kpi"><div class="kpi-val" style="color:var(--accent-yellow)">' + mostSpread.stddev.toFixed(1) + '</div><div class="kpi-lbl">Max Std Dev</div></div>' +
+    '<div class="kpi"><div class="kpi-val" style="color:var(--accent-purple)">' + (submissions.length * 58) + '</div><div class="kpi-lbl">Total Ratings</div></div>';
+}
+
+function renderRanked() {
+  const agg = getAggregated();
+  let items = Object.entries(agg).map(([id,v]) => ({id,...v}));
+  if (currentView === 'requirements') items = items.filter(i => !i.type);
+  else if (currentView === 'opportunities') items = items.filter(i => i.type === 'opp');
+  if (currentSort === 'avg') items.sort((a,b) => b.avg - a.avg);
+  else if (currentSort === 'spread') items.sort((a,b) => b.stddev - a.stddev || b.avg - a.avg);
+  else if (currentSort === 'low') items.sort((a,b) => a.avg - b.avg);
+
+  const list = document.getElementById('resultList');
+  list.innerHTML = '';
+  items.forEach((item, i) => {
+    const rank = i + 1;
+    const rc = rank===1?'rank-gold':rank===2?'rank-silver':rank===3?'rank-bronze':'rank-normal';
+    const pct = ((item.avg / 5) * 100).toFixed(0);
+    const color = avgColor(item.avg);
+    list.innerHTML +=
+      '<div class="result-item">' +
+        '<div class="result-rank ' + rc + '">' + rank + '</div>' +
+        '<div class="result-info"><div class="result-name">' + esc(item.name) + '</div><div class="result-bucket">' + esc(item.bucket) + '</div></div>' +
+        '<div class="score-bar-wrap"><div class="score-bar-track"><div class="score-bar-fill" style="width:' + pct + '%;background:' + color + '">' + (pct >= 20 ? item.avg.toFixed(1) : '') + '</div></div></div>' +
+        '<div class="result-score"><div class="score-avg" style="color:' + color + '">' + item.avg.toFixed(1) + '</div><div class="score-label">\u03c3 ' + item.stddev.toFixed(1) + '</div></div>' +
+      '</div>';
+  });
+}
+
+function renderConsensus() {
+  const agg = getAggregated();
+  const items = Object.entries(agg).map(([id,v]) => ({id,...v}));
+  const topRated = [...items].sort((a,b) => b.avg - a.avg).slice(0,10);
+  const lowRated = [...items].sort((a,b) => a.avg - b.avg).slice(0,10);
+  const mostDebated = [...items].sort((a,b) => b.stddev - a.stddev).slice(0,10);
+  const reqBuckets = {};
+  items.filter(i => !i.type).forEach(i => { if (!reqBuckets[i.bucket]) reqBuckets[i.bucket] = []; reqBuckets[i.bucket].push(i); });
+  const bucketAvg = Object.entries(reqBuckets).map(([b,arr]) => ({
+    name: b, avg: (arr.reduce((s,x) => s+x.avg, 0) / arr.length).toFixed(2)
+  })).sort((a,b) => b.avg - a.avg);
+
+  const grid = document.getElementById('consensusGrid');
+  grid.innerHTML = '';
+  grid.innerHTML += buildCard('green', '\u2605 Highest Impact (Top 10)',
+    topRated.map(i => ({score: i.avg.toFixed(1), name: i.name, extra: '\u03c3 '+i.stddev.toFixed(1), cls:'color:var(--accent-green)'})));
+  grid.innerHTML += buildCard('red', '\u25BC Lowest Impact (Bottom 10)',
+    lowRated.map(i => ({score: i.avg.toFixed(1), name: i.name, extra: '\u03c3 '+i.stddev.toFixed(1), cls:'color:var(--accent-red)'})));
+  grid.innerHTML += buildCard('yellow', '\u26A0 Most Debated (Highest Std Dev)',
+    mostDebated.map(i => ({score: '\u03c3 '+i.stddev.toFixed(1), name: i.name, extra: 'avg '+i.avg.toFixed(1), cls:'color:var(--accent-yellow)'})));
+  grid.innerHTML += buildCard('blue', '\u25B2 Avg Score by Capability Bucket',
+    bucketAvg.map(i => ({score: i.avg, name: i.name, extra: 'avg', cls:'color:var(--accent-blue)'})));
+}
+
+function buildCard(color, title, items) {
+  let h = '<div class="consensus-card"><h4 class="' + color + '">' + title + '</h4>';
+  items.forEach(i => {
+    h += '<div class="consensus-item"><span class="ci-score" style="' + i.cls + '">' + i.score + '</span>' +
+      '<span class="ci-name">' + esc(i.name) + '</span><span class="ci-extra">' + i.extra + '</span></div>';
+  });
+  return h + '</div>';
+}
+
+function renderPersonView() {
+  const grid = document.getElementById('personGrid');
+  grid.innerHTML = '';
+  submissions.forEach(s => {
+    const vals = Object.values(s.votes).map(v => typeof v === 'number' ? v : parseInt(v) || 3);
+    const avg = vals.length ? (vals.reduce((a,b) => a+b, 0) / vals.length) : 3;
+    const high = vals.filter(v => v >= 4).length;
+    const low = vals.filter(v => v <= 2).length;
+    const ts = s.timestamp ? new Date(s.timestamp).toLocaleString() : 'N/A';
+    grid.innerHTML +=
+      '<div class="person-card">' +
+        '<h4><span style="color:var(--nike-orange)">\u25CF</span> ' + esc(s.participant) + '</h4>' +
+        '<div class="person-time">Submitted: ' + ts + '</div>' +
+        '<div class="person-stat">' +
+          '<div class="ps"><div class="ps-val" style="color:' + avgColor(avg) + '">' + avg.toFixed(1) + '</div><div class="ps-lbl">Avg Score</div></div>' +
+          '<div class="ps"><div class="ps-val" style="color:var(--accent-green)">' + high + '</div><div class="ps-lbl">High (4-5)</div></div>' +
+          '<div class="ps"><div class="ps-val" style="color:var(--accent-red)">' + low + '</div><div class="ps-lbl">Low (1-2)</div></div>' +
+          '<div class="ps"><div class="ps-val" style="color:var(--text-secondary)">' + vals.length + '</div><div class="ps-lbl">Total</div></div>' +
+        '</div>' +
+      '</div>';
+  });
+}
+
+function exportCSV() {
+  if (!submissions.length) return;
+  const agg = getAggregated();
+  const items = Object.entries(agg).map(([id,v]) => ({id,...v}));
+  items.sort((a,b) => b.avg - a.avg);
+  let csv = 'Rank,Item ID,Item Name,Bucket,Avg Score,Std Dev,Min,Max';
+  submissions.forEach(s => { csv += ',' + s.participant; });
+  csv += '\n';
+  items.forEach((item, i) => {
+    csv += (i+1) + ',"' + item.id + '","' + item.name.replace(/"/g,'""') + '","' + item.bucket + '",' +
+      item.avg.toFixed(2) + ',' + item.stddev.toFixed(2) + ',' + item.min + ',' + item.max;
+    submissions.forEach(s => { csv += ',' + (s.votes[item.id] || 3); });
+    csv += '\n';
+  });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'sp_impact_ratings_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function setView(pill, view) {
+  document.querySelectorAll('.sort-pill:not([data-sort])').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active'); currentView = view; renderRanked();
+}
+function setSort(pill, sort) {
+  document.querySelectorAll('.sort-pill[data-sort]').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active'); currentSort = sort; renderRanked();
+}
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+loadVotes();
+setInterval(loadVotes, 15000);
+</script>
+</body>
+</html>
