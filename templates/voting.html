@@ -358,6 +358,93 @@
     border-radius: 999px; margin: 0.15rem 0.2rem 0.15rem 0;
     font-weight: 600;
   }
+
+  /* Vendor suggestions tab */
+  .vendor-section { margin-bottom: 1.5rem; }
+  .vendor-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 1rem 1.25rem; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .vendor-avatar {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 800; flex-shrink: 0;
+  }
+  .vendor-name { font-size: 0.95rem; font-weight: 700; }
+  .vendor-type {
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 999px;
+  }
+  .vtype-apparel { background: rgba(177,133,219,0.15); color: var(--accent-purple); }
+  .vtype-footwear { background: rgba(255,107,53,0.15); color: var(--nike-orange); }
+  .vendor-count {
+    margin-left: auto; font-size: 0.72rem; color: var(--text-dim);
+    background: var(--card); padding: 0.2rem 0.6rem; border-radius: 999px; font-weight: 600;
+  }
+  .vendor-items {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--surface); overflow: hidden;
+  }
+  .vendor-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .vendor-item:last-child { border-bottom: none; }
+  .vendor-item:hover { background: var(--card-hover); }
+  .vendor-item-num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 700; color: var(--text-dim); flex-shrink: 0;
+    border: 1px solid var(--border); margin-top: 0.1rem;
+  }
+  .vendor-item-content { flex: 1; }
+  .vendor-item-text { font-size: 0.84rem; color: var(--text); line-height: 1.55; }
+  .vendor-item-text strong { color: var(--text); }
+  .vendor-mapping {
+    display: flex; gap: 0.35rem; margin-top: 0.4rem; flex-wrap: wrap;
+  }
+  .mapping-link {
+    font-size: 0.6rem; padding: 0.12rem 0.5rem; border-radius: 999px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    cursor: pointer; text-decoration: none; transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 0.2rem;
+  }
+  .mapping-req { background: rgba(78,168,222,0.15); color: var(--accent-blue); }
+  .mapping-req:hover { background: rgba(78,168,222,0.3); }
+  .mapping-opp { background: rgba(87,204,153,0.15); color: var(--accent-green); }
+  .mapping-opp:hover { background: rgba(87,204,153,0.3); }
+
+  .vendor-guidelines {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-yellow); border-radius: var(--radius);
+    padding: 1.15rem 1.5rem; margin-top: 1.5rem;
+  }
+  .vendor-guidelines h3 {
+    font-size: 0.85rem; font-weight: 700; color: var(--accent-yellow); margin-bottom: 0.6rem;
+  }
+  .vendor-guidelines ul {
+    list-style: none; padding: 0;
+  }
+  .vendor-guidelines li {
+    font-size: 0.82rem; color: var(--text-secondary); padding: 0.3rem 0;
+    padding-left: 1.2rem; position: relative; line-height: 1.5;
+  }
+  .vendor-guidelines li::before {
+    content: "\25B8"; position: absolute; left: 0; color: var(--accent-yellow);
+  }
+
+  /* Vendor-backed badge on requirements/opportunities */
+  .vendor-backed-badge {
+    display: inline-flex; align-items: center; gap: 0.2rem;
+    font-size: 0.55rem; padding: 0.08rem 0.4rem; border-radius: 999px;
+    background: rgba(87,204,153,0.15); color: var(--accent-green);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    white-space: nowrap; cursor: help;
+  }
 </style>
 </head>
 <body>
@@ -397,6 +484,9 @@
     <button class="tab-btn" onclick="switchTab('opportunities')">
       Opportunities <span class="tab-count">10</span>
     </button>
+    <button class="tab-btn" onclick="switchTab('vendors')">
+      Vendor Feedback <span class="tab-count">8</span>
+    </button>
   </div>
 
   <!-- TAB 1: REQUIREMENTS -->
@@ -409,7 +499,7 @@
         <div class="bucket-avg" id="bucket-engine-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-engine-1"><div class="vote-num">1</div><div class="vote-name">Multi-Model Solver Supporting All Business Types</div><div class="vote-desc">Natively support Seasonal, Seasonless, SLT, Futures, GEL, NIKE By You, Quick Strike, NVS, GC Responsive</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-1"><div class="vote-num">1</div><div class="vote-name">Multi-Model Solver Supporting All Business Types</div><div class="vote-desc">Natively support Seasonal, Seasonless, SLT, Futures, GEL, NIKE By You, Quick Strike, NVS, GC Responsive</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: Stella">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-1"><p>The engine must natively support all Nike business models &mdash; <strong>Seasonal, Seasonless, Short Lead Time (SLT), Futures, GEL, NIKE By You, Quick Strike/Catalyst, Nike Virtual Studios, and GC Responsive</strong> &mdash; without manual workarounds or separate offline tools.</p>
             <div class="detail-label">Why it matters</div>
             <p>Today nearly all responsive, short-lead-time, and emerging business models run partially or fully outside the system, resulting in >$200M per year in missed margin opportunity. Planners build custom spreadsheets to handle what the engine cannot.</p>
@@ -417,21 +507,21 @@
             <span class="stakeholder-ref">Kevin &mdash; GSP</span>
             <span class="stakeholder-ref">Dave &mdash; GSP</span>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span></div>
-        <div class="vote-item" id="req-engine-2"><div class="vote-num">2</div><div class="vote-name">Configurable Planning Logic Beyond JIT</div><div class="vote-desc">Consumption-based, buy-date aligned, hybrid, and segmented approaches</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-2',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-2"><div class="vote-num">2</div><div class="vote-name">Configurable Planning Logic Beyond JIT</div><div class="vote-desc">Consumption-based, buy-date aligned, hybrid, and segmented approaches</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: Eagle Nice">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-2',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-2"><p>Replace the current overly simplistic Just-In-Time engine logic with configurable planning modes: <strong>consumption-based, buy-date aligned, hybrid, and segmented approaches</strong> driven by product characteristics and business model requirements.</p>
             <div class="detail-label">Why it matters</div>
             <p>The current JIT logic uses weekly consumption and works back from FG GAC date, making it difficult to reconcile with FG plans and Nike buy-date logic. This mismatch cascades downstream to materials planning and factory coordination.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Kevin &mdash; GSP</span>
             <span class="stakeholder-ref">Materials Planning</span></div>
-        <div class="vote-item" id="req-engine-3"><div class="vote-num">3</div><div class="vote-name">Capacity-Aware Constrained Production Planning</div><div class="vote-desc">Network modeling, netting, minimums, demand/supply match across global network</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-3',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-3"><div class="vote-num">3</div><div class="vote-name">Capacity-Aware Constrained Production Planning</div><div class="vote-desc">Network modeling, netting, minimums, demand/supply match across global network</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: Shenzhou, CSG Korea">&#127981; 2 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-3',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-3"><p>The solver must model global factory capacity at the right granularity (basic, medium, high complexity) and constrain production plans accordingly &mdash; including <strong>network modeling, netting, minimums handling, and demand/supply match</strong> across the entire supply network.</p>
             <div class="detail-label">Why it matters</div>
             <p>Early, fixed purchase commitments without capacity awareness drive over-buying, prebuilds without precision, and excess weeks of supply. The current engine forces decisions months before real demand is known, tying up ~$650M per year in excess inventory.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Workshop Scope Slide</span>
             <span class="stakeholder-ref">Sourcing &mdash; Chad/Li</span></div>
-        <div class="vote-item" id="req-engine-4"><div class="vote-num">4</div><div class="vote-name">Demand Prioritization Engine</div><div class="vote-desc">Segment and rank demand by product value, franchise importance, sport priority</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-4',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-4"><div class="vote-num">4</div><div class="vote-name">Demand Prioritization Engine</div><div class="vote-desc">Segment and rank demand by product value, franchise importance, sport priority</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-4',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-4"><p>Automatically <strong>segment and rank demand by product value, franchise strategic importance, and sport priority</strong>, then feed those priorities into capacity allocation and PO timing decisions.</p>
             <div class="detail-label">Why it matters</div>
             <p>Today all materials are treated equal and unsegmented. There are no strategic bets on critical materials by sport to support upside. Planners manually drill from top-line to focus items, losing time that should be spent on strategic decisions.</p>
@@ -446,14 +536,14 @@
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Kevin &mdash; GSP</span>
             <span class="stakeholder-ref">First Principles Research</span></div>
-        <div class="vote-item" id="req-engine-6"><div class="vote-num">6</div><div class="vote-name">Supply Shaping Actions (Prebuild, Re-Phase, Defer)</div><div class="vote-desc">Proactive recommendations early in the planning horizon to reduce buy risk</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-6',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-6"><div class="vote-num">6</div><div class="vote-name">Supply Shaping Actions (Prebuild, Re-Phase, Defer)</div><div class="vote-desc">Proactive recommendations early in the planning horizon to reduce buy risk</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Ching Luh, CSG Korea">&#127981; 2 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-6',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-6"><p>Built-in capabilities for <strong>proactively recommending supply shaping actions</strong> &mdash; prebuild, re-phasing, or deferral &mdash; early in the planning horizon to reduce buy risk, rather than reacting after commitments are locked.</p>
             <div class="detail-label">Why it matters</div>
             <p>Earlier decision-making shifts critical actions upstream where outcomes can still be influenced, reducing last-minute changes, execution fire drills, and late decision making (chase). The plan exists to bridge the tension between commitment and flexibility.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Kevin &mdash; GSP (Definition of Success)</span>
             <span class="stakeholder-ref">First Principles &mdash; Tension #1</span></div>
-        <div class="vote-item" id="req-engine-7"><div class="vote-num">7</div><div class="vote-name">Global Consistency with Local Flexibility</div><div class="vote-desc">Same logic, rules, priorities globally while preserving regional adaptation</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-7')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-7',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-7',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-7',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-7',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-7',5)">5</button></div></div>
+        <div class="vote-item" id="req-engine-7"><div class="vote-num">7</div><div class="vote-name">Global Consistency with Local Flexibility</div><div class="vote-desc">Same logic, rules, priorities globally while preserving regional adaptation</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-engine-7')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-engine-7',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-engine-7',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-engine-7',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-engine-7',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-engine-7',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-engine-7"><p>The engine must <strong>scale globally and consistently</strong> &mdash; enabling Geo and Global teams to operate from the same logic, rules, and priorities &mdash; while preserving local flexibility for regional planning teams to adapt to market-specific needs.</p>
             <div class="detail-label">Why it matters</div>
             <p>When supply is constrained, regional GMs inflate plans to secure allocation and transfer pricing compounds the distortion. The "Local vs. Global Optimization" tension is irreducible but must be deliberately managed through system design, not informal negotiation.</p>
@@ -470,7 +560,7 @@
         <div class="bucket-avg" id="bucket-scenario-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-scenario-1"><div class="vote-num">1</div><div class="vote-name">What-If Scenario Modeling</div><div class="vote-desc">Model demand changes, capacity shifts, lead time variations with real-time KPI impact</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-scenario-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-scenario-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-scenario-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-scenario-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-scenario-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-scenario-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-scenario-1"><div class="vote-num">1</div><div class="vote-name">What-If Scenario Modeling</div><div class="vote-desc">Model demand changes, capacity shifts, lead time variations with real-time KPI impact</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-scenario-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-scenario-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-scenario-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-scenario-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-scenario-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-scenario-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-scenario-1"><p>Enable planners to model <strong>what-if scenarios</strong> across demand changes, capacity shifts, lead time variations, and supplier disruptions &mdash; with real-time impact assessment on Unplanned %, cost, PIFOT, and other key metrics.</p>
             <div class="detail-label">Why it matters</div>
             <p>Today there is zero scenario planning ability. Planners cannot evaluate the plan before making changes in PMD. The ability to scenario plan and evaluate metrics BEFORE committing changes was identified as a top priority by every functional team.</p>
@@ -509,7 +599,7 @@
         <div class="bucket-avg" id="bucket-integration-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-integration-1"><div class="vote-num">1</div><div class="vote-name">Bidirectional FG-to-Materials Planning</div><div class="vote-desc">Replace one-way signal with bidirectional integration of materials constraints</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vote-tag tag-integration">Integration</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-integration-1"><div class="vote-num">1</div><div class="vote-name">Bidirectional FG-to-Materials Planning</div><div class="vote-desc">Replace one-way signal with bidirectional integration of materials constraints</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vote-tag tag-integration">Integration</span><span class="vendor-backed-badge" title="Cited by: Nico">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-integration-1"><p>Replace the current <strong>one-way signal from FG plan to materials plan</strong> with bidirectional integration. Materials constraints (vendor capacity, lead-time variability, availability) must flow back into and influence the finished goods supply plan.</p>
             <div class="detail-label">Why it matters</div>
             <p>Today o9 creates a materials forecast by blowing FG plans over BOMs, but constraints discovered in materials planning cannot feed back to reshape the FG plan. With 550+ suppliers, 40,000+ unique materials, and ~50 materials per pair of footwear, this disconnect causes cascading misalignment. 100% of materials need to be in T1 factory to make product.</p>
@@ -522,7 +612,7 @@
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Sourcing &mdash; Key Needs</span>
             <span class="stakeholder-ref">Materials Planning</span></div>
-        <div class="vote-item" id="req-integration-3"><div class="vote-num">3</div><div class="vote-name">Seasonal + Quarterly Planning Alignment</div><div class="vote-desc">Support both seasonal and quarterly granularity with cross-horizon routing</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vote-tag tag-integration">Integration</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-3',5)">5</button></div></div>
+        <div class="vote-item" id="req-integration-3"><div class="vote-num">3</div><div class="vote-name">Seasonal + Quarterly Planning Alignment</div><div class="vote-desc">Support both seasonal and quarterly granularity with cross-horizon routing</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vote-tag tag-integration">Integration</span><span class="vendor-backed-badge" title="Cited by: VT">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-3',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-integration-3"><p>Support planning at <strong>both seasonal and quarterly granularity</strong> and enable routing of product across time horizons &mdash; because planning data is seasonal while sourcing operates quarterly, creating constant misalignment.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span></div>
@@ -535,7 +625,7 @@
         <div class="vote-detail-panel" id="detail-req-integration-5"><p>Integrate <strong>Multi-Echelon Inventory Optimization (MEIO) buffer targets</strong> as a native input to the solver, so that safety stock positions are system-recommended and automatically influence buy decisions rather than being manually maintained.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Scope Definition (Critical Inputs)</span></div>
-        <div class="vote-item" id="req-integration-6"><div class="vote-num">6</div><div class="vote-name">Downstream System Integration (PO, Contracts)</div><div class="vote-desc">Automated PO Maintenance, Contract Maintenance, Pricing/Markdowns with SAP</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vote-tag tag-integration">Integration</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-6',5)">5</button></div></div>
+        <div class="vote-item" id="req-integration-6"><div class="vote-num">6</div><div class="vote-name">Downstream System Integration (PO, Contracts)</div><div class="vote-desc">Automated PO Maintenance, Contract Maintenance, Pricing/Markdowns with SAP</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vote-tag tag-integration">Integration</span><span class="vendor-backed-badge" title="Cited by: Ching Luh">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-integration-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-integration-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-integration-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-integration-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-integration-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-integration-6',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-integration-6"><p>Reliable and timely execution of planning-facilitated decisions through automated <strong>PO Maintenance, Contract Maintenance, and Pricing/Markdowns</strong> integration with downstream systems including SAP S/4 and AFS.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Ecosystem Architecture</span>
@@ -550,7 +640,7 @@
         <div class="bucket-avg" id="bucket-data-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-data-1"><div class="vote-num">1</div><div class="vote-name">Certified Data Foundation for Planners, Models &amp; AI</div><div class="vote-desc">Certified, trusted version of reality covering POS, Bookings, Inventory, Signals</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-data-1"><div class="vote-num">1</div><div class="vote-name">Certified Data Foundation for Planners, Models &amp; AI</div><div class="vote-desc">Certified, trusted version of reality covering POS, Bookings, Inventory, Signals</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: Stella">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-data-1"><p>A <strong>certified, trusted version of reality</strong> covering POS, Bookings, Inventory, Marketplace Insights, External Signals, and Product Data &mdash; serving as the single foundation for planners, optimization models, and AI agents alike.</p>
             <div class="detail-label">Why it matters</div>
             <p>Weekly data accuracy is poor &mdash; planners spend time interpreting whether this week's results are reliable enough to act on. Complex data entry and maintenance (FG, sub-capacity, tooling) adds friction. Without trusted data, no amount of AI or optimization will produce reliable plans.</p>
@@ -562,14 +652,14 @@
         <div class="vote-detail-panel" id="detail-req-data-2"><p>Build a <strong>semantic layer</strong> that contextualizes data so planners and machines can reason using common language: governed Data & Metric Definitions, Metrics-as-a-Service, Metadata Dictionary, and Codified Context.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Ecosystem Architecture</span></div>
-        <div class="vote-item" id="req-data-3"><div class="vote-num">3</div><div class="vote-name">Automated Data Quality Monitoring &amp; Alerting</div><div class="vote-desc">Real-time DQ scoring, anomaly detection, booking bubble catching before cascade</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-3',5)">5</button></div></div>
+        <div class="vote-item" id="req-data-3"><div class="vote-num">3</div><div class="vote-name">Automated Data Quality Monitoring &amp; Alerting</div><div class="vote-desc">Real-time DQ scoring, anomaly detection, booking bubble catching before cascade</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Shenzhou">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-3',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-data-3"><p>Real-time <strong>data quality scoring, anomaly detection, and automated alerting</strong> across all planning inputs &mdash; catching booking bubbles, BOM gaps, and parameter errors before they cascade through the planning cycle.</p>
             <div class="detail-label">Why it matters</div>
             <p>Every season right before F1, planners lose 4-5 weeks of planning time due to booking bubbles. GEOs missing data or submitting errors stop the entire downstream process. There are no consequences today for poor data quality upstream.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span>
             <span class="stakeholder-ref">Mike &mdash; DCM/DEC</span></div>
-        <div class="vote-item" id="req-data-4"><div class="vote-num">4</div><div class="vote-name">BOM Completeness Enforcement</div><div class="vote-desc">System-enforced BOM readiness at Week 50 and Week 40 milestones</div><div class="vote-tags"><span class="vote-tag tag-medium">Medium</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-4',5)">5</button></div></div>
+        <div class="vote-item" id="req-data-4"><div class="vote-num">4</div><div class="vote-name">BOM Completeness Enforcement</div><div class="vote-desc">System-enforced BOM readiness at Week 50 and Week 40 milestones</div><div class="vote-tags"><span class="vote-tag tag-medium">Medium</span><span class="vendor-backed-badge" title="Cited by: Shenzhou">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-data-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-data-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-data-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-data-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-data-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-data-4',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-data-4"><p>System-enforced <strong>BOM readiness tracking and gates</strong> at key milestones: Week 50 (100% BOM complete), Week 40 (100% buy ready). Today 30% of items have no BOMs at PO, creating downstream chaos in materials planning.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Materials Planning</span></div>
@@ -603,7 +693,7 @@
         <div class="vote-detail-panel" id="detail-req-exception-3"><p>Configurable <strong>escalation workflows</strong> that route exceptions to the right decision-maker based on type, magnitude, and business impact &mdash; with SLAs and visibility into resolution status.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Ecosystem Architecture &mdash; Human-in-the-Loop Workflows</span></div>
-        <div class="vote-item" id="req-exception-4"><div class="vote-num">4</div><div class="vote-name">Reduction of Manual System Touches</div><div class="vote-desc">Eliminate unnecessary manual parameter manipulation to make the system work</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-exception-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-exception-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-exception-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-exception-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-exception-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-exception-4',5)">5</button></div></div>
+        <div class="vote-item" id="req-exception-4"><div class="vote-num">4</div><div class="vote-name">Reduction of Manual System Touches</div><div class="vote-desc">Eliminate unnecessary manual parameter manipulation to make the system work</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Nico, Ramatex">&#127981; 2 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-exception-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-exception-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-exception-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-exception-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-exception-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-exception-4',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-exception-4"><p><strong>Eliminate unnecessary manual parameter manipulation</strong> that planners perform to "make the system work." Today too much time is spent by analysts manipulating system settings just to get something to plan &mdash; the engine should handle this logic natively.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Mike &mdash; DCM/DEC</span>
@@ -622,30 +712,30 @@
         <div class="bucket-avg" id="bucket-collab-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-collab-1"><div class="vote-num">1</div><div class="vote-name">Dynamic Digital Factory Collaboration</div><div class="vote-desc">Replace offline/email communication with real-time digital platform</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-collab-1"><div class="vote-num">1</div><div class="vote-name">Dynamic Digital Factory Collaboration</div><div class="vote-desc">Replace offline/email communication with real-time digital platform</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Nico, Ramatex, Ching Luh, Stella">&#127981; 4 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-collab-1"><p>Replace offline and email-based factory communication with a <strong>digital collaboration platform</strong> providing real-time status updates, issue tracking, and collaborative problem-solving with T1 factories and T2 material vendors.</p>
             <div class="detail-label">Why it matters</div>
             <p>Collaboration with factories is largely offline and via emails. There is no dynamic way to collaborate on issues or status. Consumer needs dates should be visible alongside production optimization data.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span>
             <span class="stakeholder-ref">Mike &mdash; DCM/DEC</span></div>
-        <div class="vote-item" id="req-collab-2"><div class="vote-num">2</div><div class="vote-name">True Need Date Visibility for Partners</div><div class="vote-desc">Provide actual consumer need date (not just OGAC) to factory partners</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-2',5)">5</button></div></div>
+        <div class="vote-item" id="req-collab-2"><div class="vote-num">2</div><div class="vote-name">True Need Date Visibility for Partners</div><div class="vote-desc">Provide actual consumer need date (not just OGAC) to factory partners</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Ramatex, Ching Luh">&#127981; 2 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-2',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-collab-2"><p>Provide partners with the <strong>true consumer need date</strong> (not just OGAC) so they can optimize production scheduling against actual demand timing, enabling smarter trade-offs at the factory level.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span></div>
-        <div class="vote-item" id="req-collab-3"><div class="vote-num">3</div><div class="vote-name">Burst Report Modernization</div><div class="vote-desc">Reduce noise, improve signal quality, move toward event-driven communication</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-3',5)">5</button></div></div>
+        <div class="vote-item" id="req-collab-3"><div class="vote-num">3</div><div class="vote-name">Burst Report Modernization</div><div class="vote-desc">Reduce noise, improve signal quality, move toward event-driven communication</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: Eagle Nice, Ching Luh">&#127981; 2 vendors</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-3')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-3',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-3',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-3',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-3',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-3',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-collab-3"><p>Fundamentally redesign factory burst reports to <strong>reduce noise and improve signal quality</strong>. Weekly reports cause excessive noise for factory partners when the inputs (Demand Plan) are not useful on a weekly basis. Move toward event-driven, filtered, and prioritized communication.</p>
             <div class="detail-label">Why it matters</div>
             <p>Burst reports are the primary signal to factories. When they contain noise, factories lose trust in the plan &mdash; directly amplifying the "Technology vs. Trust" tension identified as one of five irreducible tensions in supply planning.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Dave &mdash; GSP</span>
             <span class="stakeholder-ref">First Principles &mdash; Tension #5</span></div>
-        <div class="vote-item" id="req-collab-4"><div class="vote-num">4</div><div class="vote-name">Landed Cost Visibility in Plans</div><div class="vote-desc">E2E landed cost visible within planning workflow for cost trade-off decisions</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-4',5)">5</button></div></div>
+        <div class="vote-item" id="req-collab-4"><div class="vote-num">4</div><div class="vote-name">Landed Cost Visibility in Plans</div><div class="vote-desc">E2E landed cost visible within planning workflow for cost trade-off decisions</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: Ramatex">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-4',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-collab-4"><p>Make <strong>E2E landed cost visible</strong> within the planning workflow, so that sourcing and planning decisions can explicitly account for cost trade-offs alongside service level and speed objectives.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Sourcing &mdash; Key Needs</span>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span></div>
-        <div class="vote-item" id="req-collab-5"><div class="vote-num">5</div><div class="vote-name">Postponed Production Allocation</div><div class="vote-desc">Delay geo/channel/account commitment to preserve flexibility</div><div class="vote-tags"><span class="vote-tag tag-medium">Medium</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-5')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-5',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-5',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-5',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-5',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-5',5)">5</button></div></div>
+        <div class="vote-item" id="req-collab-5"><div class="vote-num">5</div><div class="vote-name">Postponed Production Allocation</div><div class="vote-desc">Delay geo/channel/account commitment to preserve flexibility</div><div class="vote-tags"><span class="vote-tag tag-medium">Medium</span><span class="vendor-backed-badge" title="Cited by: Ching Luh">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-collab-5')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-collab-5',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-collab-5',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-collab-5',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-collab-5',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-collab-5',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-collab-5"><p>Support <strong>postponed allocation</strong> of production to geo, channel, and account &mdash; delaying commitment decisions as long as possible to preserve flexibility and respond to demand signals closer to market.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Mike &mdash; DCM/DEC</span>
@@ -667,7 +757,7 @@
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Scope Definition &mdash; Gen AI & Agentic</span>
             <span class="stakeholder-ref">First Principles &mdash; Tension #5</span></div>
-        <div class="vote-item" id="req-analytics-2"><div class="vote-num">2</div><div class="vote-name">Comprehensive KPI Dashboards</div><div class="vote-desc">PIFOT, Unplanned%, Build Late%, WOS, E2E Cost, Forecast Accuracy, Capacity Util</div><div class="vote-tags"><span class="vote-tag tag-high">High</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-analytics-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-analytics-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-analytics-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-analytics-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-analytics-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-analytics-2',5)">5</button></div></div>
+        <div class="vote-item" id="req-analytics-2"><div class="vote-num">2</div><div class="vote-name">Comprehensive KPI Dashboards</div><div class="vote-desc">PIFOT, Unplanned%, Build Late%, WOS, E2E Cost, Forecast Accuracy, Capacity Util</div><div class="vote-tags"><span class="vote-tag tag-high">High</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-analytics-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-analytics-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-analytics-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-analytics-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-analytics-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-analytics-2',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-analytics-2"><p>Performance management dashboards covering <strong>PIFOT, Unplanned %, Build Late %, Inventory Weeks of Supply, E2E Cost, Forecast Accuracy, Capacity Utilization, and Coverage</strong> &mdash; with drill-down from portfolio to SKU level.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Li &mdash; Sourcing</span>
@@ -693,7 +783,7 @@
         <div class="bucket-avg" id="bucket-governance-avg">avg 3.0</div>
       </div>
       <div class="vote-list">
-        <div class="vote-item" id="req-governance-1"><div class="vote-num">1</div><div class="vote-name">Authoritative Plan Grid with Governed Metrics</div><div class="vote-desc">Single, governed, authoritative plan of record as operational source of truth</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-governance-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-governance-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-governance-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-governance-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-governance-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-governance-1',5)">5</button></div></div>
+        <div class="vote-item" id="req-governance-1"><div class="vote-num">1</div><div class="vote-name">Authoritative Plan Grid with Governed Metrics</div><div class="vote-desc">Single, governed, authoritative plan of record as operational source of truth</div><div class="vote-tags"><span class="vote-tag tag-critical">Critical</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span></div><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('req-governance-1')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('req-governance-1',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('req-governance-1',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('req-governance-1',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('req-governance-1',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('req-governance-1',5)">5</button></div></div>
         <div class="vote-detail-panel" id="detail-req-governance-1"><p>A <strong>single, governed, authoritative plan of record</strong> that serves as the operational source of truth for "the plan." All stakeholders &mdash; supply planning, sourcing, materials, DEC/DCM &mdash; should operate from the same versioned plan.</p>
             <div class="detail-label">Stakeholder references</div>
             <span class="stakeholder-ref">Ecosystem Architecture &mdash; Plan of Record Layer</span>
@@ -778,7 +868,7 @@
     <div class="opp-detail-panel" id="detail-opp-1"><h4>What &amp; Why</h4>
               <p>Excessive Unplanned and Build Late effort drives rework, missed delivery windows, and contributes to ~$488M/year in gross margin loss. Today, planner effort is spent firefighting instead of shaping the plan. An AI agent can classify unplanned exceptions by root cause, recommend the optimal resolution (reroute, prebuild, defer, cancel), and auto-execute low-risk resolutions with human approval for high-impact ones.</p>
               <div class="value-chip">Impact: Reduce UP% by 15-25%, save 200+ planner hours/season</div></div>
-    <div class="opp-vote-card" id="opp-2"><div class="opp-rank" style="background:rgba(255,107,53,0.15);color:var(--nike-orange);">2</div><div class="opp-vote-info"><div class="opp-vote-title">Booking Bubble Detection &amp; Auto-Quarantine</div><div class="opp-vote-sub">Automated data quality gates to catch booking bubbles before they cascade downstream</div></div><span class="opp-timeline-tag tl-now">Start Now</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-2',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-2"><div class="opp-rank" style="background:rgba(255,107,53,0.15);color:var(--nike-orange);">2</div><div class="opp-vote-info"><div class="opp-vote-title">Booking Bubble Detection &amp; Auto-Quarantine</div><div class="opp-vote-sub">Automated data quality gates to catch booking bubbles before they cascade downstream</div></div><span class="opp-timeline-tag tl-now">Start Now</span><span class="vendor-backed-badge" title="Cited by: Shenzhou, Ching Luh">&#127981; 2 vendors</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-2')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-2',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-2',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-2',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-2',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-2',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-2"><h4>What &amp; Why</h4>
               <p>Every season right before F1, planners lose <strong>4-5 weeks of planning time</strong> due to booking bubbles. GEOs missing something or submitting errors stops the entire downstream process (Sourcing, SP, Tier 1 factories, T2 material vendors). An automated detection system can flag anomalous bookings in near-real-time, quarantine suspect data, and alert upstream teams to fix errors before they propagate.</p>
               <div class="value-chip">Impact: Recover 4-5 weeks of lost planning time per season</div></div>
@@ -786,27 +876,27 @@
     <div class="opp-detail-panel" id="detail-opp-3"><h4>What &amp; Why</h4>
               <p>In the current complex data environment, it's hard to focus on what matters. Planners focus on top-line numbers and then manually drill down to find focus items. A prioritized exception dashboard would <strong>rank all exceptions by revenue impact, margin impact, and strategic priority</strong>, giving planners a daily action queue instead of a data swamp.</p>
               <div class="value-chip">Impact: 30-40% reduction in time-to-decision on critical exceptions</div></div>
-    <div class="opp-vote-card" id="opp-4"><div class="opp-rank" style="background:rgba(78,168,222,0.15);color:var(--accent-blue);">4</div><div class="opp-vote-info"><div class="opp-vote-title">Burst Report Signal-to-Noise Optimization</div><div class="opp-vote-sub">Filter weekly factory reports to highlight only meaningful changes</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-4',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-4"><div class="opp-rank" style="background:rgba(78,168,222,0.15);color:var(--accent-blue);">4</div><div class="opp-vote-info"><div class="opp-vote-title">Burst Report Signal-to-Noise Optimization</div><div class="opp-vote-sub">Filter weekly factory reports to highlight only meaningful changes</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><span class="vendor-backed-badge" title="Cited by: Eagle Nice">&#127981; 1 vendor</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-4')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-4',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-4',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-4',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-4',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-4',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-4"><h4>What &amp; Why</h4>
               <p>Weekly burst reports cause <strong>too much noise for factory partners</strong> when the demand plan inputs are not stable enough for weekly publication. This erodes factory trust in Nike's planning signal &mdash; one of the five irreducible tensions. A smarter burst report filters out noise (< X% change thresholds), highlights material changes, and provides context for why quantities shifted.</p>
               <div class="value-chip">Impact: Rebuild factory trust, reduce factory planning noise by 50%+</div></div>
-    <div class="opp-vote-card" id="opp-5"><div class="opp-rank" style="background:rgba(78,168,222,0.15);color:var(--accent-blue);">5</div><div class="opp-vote-info"><div class="opp-vote-title">BOM Completeness Tracker &amp; Gates</div><div class="opp-vote-sub">Automated milestone tracking for BOM readiness at Week 50 and Week 40</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-5')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-5',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-5',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-5',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-5',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-5',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-5"><div class="opp-rank" style="background:rgba(78,168,222,0.15);color:var(--accent-blue);">5</div><div class="opp-vote-info"><div class="opp-vote-title">BOM Completeness Tracker &amp; Gates</div><div class="opp-vote-sub">Automated milestone tracking for BOM readiness at Week 50 and Week 40</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><span class="vendor-backed-badge" title="Cited by: Shenzhou, Stella">&#127981; 2 vendors</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-5')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-5',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-5',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-5',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-5',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-5',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-5"><h4>What &amp; Why</h4>
               <p>Today <strong>30% of items have no BOMs at PO creation</strong>. The milestones are clear &mdash; Week 50 should be 100% BOM complete, Week 40 should be 100% buy ready &mdash; but there's no automated enforcement. A BOM completeness tracker with automated gates would prevent incomplete items from progressing past milestones and create visibility into creation discipline.</p>
               <div class="value-chip">Impact: Reduce no-BOM-at-PO rate from 30% to <5%</div></div>
-    <div class="opp-vote-card" id="opp-6"><div class="opp-rank" style="background:rgba(255,209,102,0.15);color:var(--accent-yellow);">6</div><div class="opp-vote-info"><div class="opp-vote-title">Lightweight Scenario Planning MVP</div><div class="opp-vote-sub">Basic what-if capability for key decisions ahead of full engine replacement</div></div><span class="opp-timeline-tag tl-half">Next 6 Months</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-6',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-6"><div class="opp-rank" style="background:rgba(255,209,102,0.15);color:var(--accent-yellow);">6</div><div class="opp-vote-info"><div class="opp-vote-title">Lightweight Scenario Planning MVP</div><div class="opp-vote-sub">Basic what-if capability for key decisions ahead of full engine replacement</div></div><span class="opp-timeline-tag tl-half">Next 6 Months</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-6')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-6',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-6',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-6',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-6',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-6',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-6"><h4>What &amp; Why</h4>
               <p>Scenario planning was the single most requested capability across every stakeholder. While the full digital twin is a long-term investment, a <strong>lightweight scenario comparison tool</strong> can be built now &mdash; pulling plan snapshots, allowing parameter adjustments, and showing side-by-side KPI impact. This proves the pattern and builds organizational muscle for scenario-based decision making.</p>
               <div class="value-chip">Impact: Enable data-driven "what-if" decisions for the first time</div></div>
-    <div class="opp-vote-card" id="opp-7"><div class="opp-rank" style="background:rgba(255,209,102,0.15);color:var(--accent-yellow);">7</div><div class="opp-vote-info"><div class="opp-vote-title">Materials-to-FG Constraint Feedback Loop</div><div class="opp-vote-sub">Pilot bidirectional signal for top 50 constrained materials</div></div><span class="opp-timeline-tag tl-half">Next 6 Months</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-7')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-7',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-7',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-7',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-7',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-7',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-7"><div class="opp-rank" style="background:rgba(255,209,102,0.15);color:var(--accent-yellow);">7</div><div class="opp-vote-info"><div class="opp-vote-title">Materials-to-FG Constraint Feedback Loop</div><div class="opp-vote-sub">Pilot bidirectional signal for top 50 constrained materials</div></div><span class="opp-timeline-tag tl-half">Next 6 Months</span><span class="vendor-backed-badge" title="Cited by: Ching Luh">&#127981; 1 vendor</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-7')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-7',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-7',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-7',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-7',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-7',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-7"><h4>What &amp; Why</h4>
               <p>The current one-way signal from FG plan to materials plan means materials constraints are invisible to FG planners. A <strong>pilot feedback loop for critical materials</strong> (e.g., top 50 constrained materials) would surface capacity violations and lead-time risks back into the FG planning view, enabling earlier corrective action.</p>
               <div class="value-chip">Impact: Reduce materials-driven plan disruptions by 20-30%</div></div>
-    <div class="opp-vote-card" id="opp-8"><div class="opp-rank" style="background:rgba(87,204,153,0.15);color:var(--accent-green);">8</div><div class="opp-vote-info"><div class="opp-vote-title">Product Segmentation for Differentiated Planning</div><div class="opp-vote-sub">Classify SKUs by value, complexity, and business model for tiered planning</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-8')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-8',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-8',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-8',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-8',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-8',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-8"><div class="opp-rank" style="background:rgba(87,204,153,0.15);color:var(--accent-green);">8</div><div class="opp-vote-info"><div class="opp-vote-title">Product Segmentation for Differentiated Planning</div><div class="opp-vote-sub">Classify SKUs by value, complexity, and business model for tiered planning</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><span class="vendor-backed-badge" title="Cited by: CSG Korea">&#127981; 1 vendor</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-8')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-8',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-8',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-8',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-8',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-8',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-8"><h4>What &amp; Why</h4>
               <p>Today <strong>all materials and products are treated equal</strong> with no segmentation. A product segmentation framework would classify SKUs by revenue contribution, strategic importance (franchise health), margin profile, and demand variability &mdash; enabling different planning rules, review frequencies, and automation levels for each segment.</p>
               <div class="value-chip">Impact: Foundation for all downstream prioritization capabilities</div></div>
-    <div class="opp-vote-card" id="opp-9"><div class="opp-rank" style="background:rgba(87,204,153,0.15);color:var(--accent-green);">9</div><div class="opp-vote-info"><div class="opp-vote-title">Plan vs. Forecast Reconciliation Tool</div><div class="opp-vote-sub">Automated gap analysis between forecast and supply plan with variance drivers</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-9')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-9',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-9',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-9',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-9',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-9',5)">5</button></div></div>
+    <div class="opp-vote-card" id="opp-9"><div class="opp-rank" style="background:rgba(87,204,153,0.15);color:var(--accent-green);">9</div><div class="opp-vote-info"><div class="opp-vote-title">Plan vs. Forecast Reconciliation Tool</div><div class="opp-vote-sub">Automated gap analysis between forecast and supply plan with variance drivers</div></div><span class="opp-timeline-tag tl-quarter">This Quarter</span><span class="vendor-backed-badge" title="Cited by: CSG Korea, VT">&#127981; 2 vendors</span><button class="vote-detail-toggle" onclick="event.stopPropagation();toggleDetail('opp-9')" title="Show details">&#9660;</button><div class="score-btns"><button class="score-btn" data-val="1" onclick="setScore('opp-9',1)">1</button><button class="score-btn" data-val="2" onclick="setScore('opp-9',2)">2</button><button class="score-btn active" data-val="3" onclick="setScore('opp-9',3)">3</button><button class="score-btn" data-val="4" onclick="setScore('opp-9',4)">4</button><button class="score-btn" data-val="5" onclick="setScore('opp-9',5)">5</button></div></div>
     <div class="opp-detail-panel" id="detail-opp-9"><h4>What &amp; Why</h4>
               <p>People use "forecast" and "plan" interchangeably, leading to misaligned expectations. The first principles research showed that for the same SKU, the forecast might show 781K units while the plan shows 1.01M &mdash; a 30% gap that's expected but poorly understood. A <strong>reconciliation tool showing the gap breakdown</strong> (safety stock, prebuilds, capacity reservations, minimums) builds organizational literacy and reduces finger-pointing.</p>
               <div class="value-chip">Impact: Align cross-functional understanding, reduce escalations</div></div>
@@ -814,6 +904,385 @@
     <div class="opp-detail-panel" id="detail-opp-10"><h4>What &amp; Why</h4>
               <p>The system today does not differentiate PO priority. <strong>Planning Priority POs with buffer</strong> for highest-value product ensures that strategic franchises and must-win styles get factory capacity first, with built-in buffer to absorb demand volatility without constant re-planning.</p>
               <div class="value-chip">Impact: Protect revenue on top franchises, reduce churn on strategic POs</div></div>
+  </div>
+
+  <!-- TAB 3: VENDOR SUGGESTIONS -->
+  <div id="tab-vendors" class="tab-content">
+
+    <div class="instructions" style="border-left-color: var(--accent-green); margin-bottom: 1.5rem;">
+      <div class="inst-icon">&#127981;</div>
+      <div>
+        <strong>Vendor Feedback Summary.</strong> These insights come directly from discussions with 8 manufacturing partners (5 Apparel, 3 Footwear). Each item is mapped to the relevant long-term requirement or short-term opportunity where applicable. Look for the <span style="color:var(--accent-green);font-weight:700;">VENDOR-BACKED</span> badges on the Requirements and Opportunities tabs to see which items have direct vendor validation.
+      </div>
+    </div>
+
+    <!-- Vendor 1: Eagle Nice -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(177,133,219,0.15);color:var(--accent-purple);">EN</div>
+        <div>
+          <div class="vendor-name">Eagle Nice</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Woven, Outerwear &amp; Jacket</div>
+        </div>
+        <span class="vendor-type vtype-apparel">Apparel</span>
+        <div class="vendor-count">1 issue</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Buy volatility is too high:</strong> 35% plan accuracy &times; 30D forecast actualization &mdash; below 44% benchmark for all apparel. Between 30-day prior to buy, 8.5M of 13M units are not bought out. Factories need 30 days for internal planning and material procurement. <strong>Impact:</strong> Seasonal OTP loss of 5%, capacity waste of 11% (~$35M). Proposed target: 4&ndash;10% accuracy, with geo discipline in timing.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-2')">&#9654; Configurable Planning Logic</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-3')">&#9654; Burst Report Modernization</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-4')">&#9654; Burst Report Signal-to-Noise</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 2: Nico -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(177,133,219,0.15);color:var(--accent-purple);">NI</div>
+        <div>
+          <div class="vendor-name">Nico</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Apparel</div>
+        </div>
+        <span class="vendor-type vtype-apparel">Apparel</span>
+        <div class="vendor-count">1 issue</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Frequent priority changes disrupt production stability.</strong> Ongoing reprioritization requires extra work: analyze requirements, check material readiness, get material commitment, then re-align production plan. Material availability is the prerequisite. <strong>Proposed solution:</strong> communicate priority changes through the system, not ad-hoc.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-1')">&#9654; Digital Factory Collaboration</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-exception-4')">&#9654; Reduce Manual System Touches</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-integration-1')">&#9654; Bidirectional FG-to-Materials</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 3: Ramatex -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(177,133,219,0.15);color:var(--accent-purple);">RM</div>
+        <div>
+          <div class="vendor-name">Ramatex Team</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Apparel</div>
+        </div>
+        <span class="vendor-type vtype-apparel">Apparel</span>
+        <div class="vendor-count">3 issues</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>SPOT system requires heavy manual handoff.</strong> First plan from SPOT, then submit for approval &mdash; someone switches it manually. Heavily dependent on email, Excel, and manual validation. Need a planning platform the factory can access directly to accept/reject.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-1')">&#9654; Digital Factory Collaboration</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-exception-4')">&#9654; Reduce Manual System Touches</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">2</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>MECO balancing cadence is too slow.</strong> Typically 2&ndash;3 weeks for changes to fully reflect. Propose a planning platform that the factory can access, with PHK agree/reject workflows.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-1')">&#9654; Digital Factory Collaboration</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">3</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Fragmented buying pattern.</strong> Multiple buys for the same PO, often placed well ahead of marketplace need dates. Solution: give factories visibility to more data so they can plan cohesively.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-2')">&#9654; True Need Date Visibility</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-4')">&#9654; Landed Cost Visibility</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 4: Shenzhou International -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(177,133,219,0.15);color:var(--accent-purple);">SZ</div>
+        <div>
+          <div class="vendor-name">Shenzhou International</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Apparel</div>
+        </div>
+        <span class="vendor-type vtype-apparel">Apparel</span>
+        <div class="vendor-count">3 issues</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Booking bubble (Wk29&ndash;Wk24):</strong> demand numbers are overstated because of a system issue with direct ship consumptions. Numbers cannot be trusted during this window.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-data-3')">&#9654; Data Quality Monitoring</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-2')">&#9654; Booking Bubble Detection</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">2</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Long holidays not reflected in lead times.</strong> Manufacturing lead time calculations do not account for factory available working days being fewer during holiday periods.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-3')">&#9654; Capacity-Aware Planning</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">3</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>QPP sample approval window is too long.</strong> Extended sample approval timelines delay production readiness and compress the manufacturing window.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-data-4')">&#9654; BOM Completeness Enforcement</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-5')">&#9654; BOM Completeness Tracker</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 5: Ching Luh -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(255,107,53,0.15);color:var(--nike-orange);">CL</div>
+        <div>
+          <div class="vendor-name">Ching Luh</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Footwear</div>
+        </div>
+        <span class="vendor-type vtype-footwear">Footwear</span>
+        <div class="vendor-count">4 issues</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Visibility gaps:</strong> Signals are available but not always detailed or connected enough for factory-level decisions. Example: bookings bubble data is not actionable at their level.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-2')">&#9654; True Need Date Visibility</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-2')">&#9654; Booking Bubble Detection</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">2</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Readiness timing mismatch:</strong> Factories must commit resources, lines, and plan shipments before signals are fully mature. Nike hasn&rsquo;t shared the label data in time.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-6')">&#9654; Supply Shaping Actions</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-5')">&#9654; Postponed Allocation</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">3</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>System synchronization gaps:</strong> Core planning systems (PCX, DPOM, Burst Report, Mercury, vendor UPC data) are still partially disconnected. Signals and systems should stay consistently connected.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-integration-6')">&#9654; Downstream System Integration</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-3')">&#9654; Burst Report Modernization</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">4</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Future ask:</strong> Nike enables earlier signals, connected systems, and faster feedback loops across the supply network.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-1')">&#9654; Digital Factory Collaboration</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-7')">&#9654; Materials-to-FG Feedback Loop</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 6: Stella -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(255,107,53,0.15);color:var(--nike-orange);">ST</div>
+        <div>
+          <div class="vendor-name">Stella</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Footwear</div>
+        </div>
+        <span class="vendor-type vtype-footwear">Footwear</span>
+        <div class="vendor-count">3 issues</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>RR/Pre-order (sneakers reserved) workflow:</strong> Take the order and build post &mdash; the process needs to be rethought for a build-to-order model.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-1')">&#9654; Multi-Model Solver</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">2</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Buy readiness (BR) data accuracy issues</strong> cause delays in production planning. Factories cannot start on time when upstream data is wrong.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-data-1')">&#9654; Certified Data Foundation</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-5')">&#9654; BOM Completeness Tracker</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">3</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>CV loading process is dictated, not collaborative.</strong> Factories were ready but Nike tells them how to do it. &ldquo;There has to be a better way.&rdquo;</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-collab-1')">&#9654; Digital Factory Collaboration</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 7: CSG Korea -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(255,107,53,0.15);color:var(--nike-orange);">CS</div>
+        <div>
+          <div class="vendor-name">CSG Korea</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Footwear</div>
+        </div>
+        <span class="vendor-type vtype-footwear">Footwear</span>
+        <div class="vendor-count">8 issues</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Volatility &mdash; accuracy vs. managing:</strong> The tension between forecast accuracy and the ability to manage volatility is unresolved.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-scenario-1')">&#9654; What-If Scenario Modeling</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">2</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Change after PO issuance</strong> drives rework and instability in factory production schedules.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-6')">&#9654; Supply Shaping Actions</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">3</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Adding complexity</strong> (e.g., Vibram soles) without adjusting planning parameters creates downstream chaos.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-3')">&#9654; Capacity-Aware Planning</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">4</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>No backup plan in case of challenge.</strong> When disruptions occur, there is no pre-defined contingency or scenario to fall back on.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-scenario-1')">&#9654; What-If Scenario Modeling</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-6')">&#9654; Scenario Planning MVP</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">5</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Key figure for planning shifted</strong> from fill rate to target range, but the implications haven&rsquo;t been fully absorbed into factory planning.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-analytics-2')">&#9654; Comprehensive KPI Dashboards</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">6</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Dual sourcing policy</strong> needed as a way to respond to volatility, but not currently systematized in planning.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-3')">&#9654; Capacity-Aware Planning</a>
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-7')">&#9654; Global/Local Flexibility</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">7</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Misalignment between LRCP, QoR, and BR.</strong> Different messages across long-range capacity plan, quarterly operating review, and buy readiness create confusion.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-governance-1')">&#9654; Authoritative Plan of Record</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-9')">&#9654; Plan vs. Forecast Reconciliation</a>
+            </div>
+          </div>
+        </div>
+        <div class="vendor-item">
+          <div class="vendor-item-num">8</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Focus at key new model/launch ramp-up:</strong> Commodity may not get enough attention when all focus is on new launches.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-engine-4')">&#9654; Demand Prioritization Engine</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-8')">&#9654; Product Segmentation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vendor 8: VT -->
+    <div class="vendor-section">
+      <div class="vendor-header">
+        <div class="vendor-avatar" style="background:rgba(177,133,219,0.15);color:var(--accent-purple);">VT</div>
+        <div>
+          <div class="vendor-name">VT</div>
+          <div style="font-size:0.7rem;color:var(--text-dim);">Apparel</div>
+        </div>
+        <span class="vendor-type vtype-apparel">Apparel</span>
+        <div class="vendor-count">1 issue</div>
+      </div>
+      <div class="vendor-items">
+        <div class="vendor-item">
+          <div class="vendor-item-num">1</div>
+          <div class="vendor-item-content">
+            <div class="vendor-item-text"><strong>Gap between Long Range (HQ) planning and Quarterly planning numbers.</strong> The disconnect between these two horizons creates execution misalignment.</div>
+            <div class="vendor-mapping">
+              <a class="mapping-link mapping-req" onclick="goToItem('req-integration-3')">&#9654; Seasonal + Quarterly Alignment</a>
+              <a class="mapping-link mapping-opp" onclick="goToItem('opp-9')">&#9654; Plan vs. Forecast Reconciliation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall Guidelines -->
+    <div class="vendor-guidelines">
+      <h3>&#9733; Cross-Vendor Principles (Recurring Themes)</h3>
+      <ul>
+        <li><strong>Progressive commitment as the default</strong> &mdash; don&rsquo;t lock everything in at once</li>
+        <li><strong>Range-based signals, not point forecasts</strong> &mdash; communicate uncertainty honestly</li>
+        <li><strong>Constrained plan governs demand</strong> &mdash; what can actually be made trumps what is wished for</li>
+        <li><strong>Standard backbone, heterogeneous execution</strong> &mdash; one system, different factory workflows</li>
+        <li><strong>Plan at execution level, aggregate upward</strong> &mdash; not the other way around</li>
+        <li><strong>Trust is an investment, not a byproduct</strong> &mdash; accuracy and transparency build partner confidence</li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="submit-section">
@@ -970,6 +1439,24 @@ function switchTab(tab) {
   event.currentTarget.classList.add('active');
 }
 
+
+
+function goToItem(id) {
+  var tab = id.startsWith('opp-') ? 'opportunities' : 'requirements';
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  var btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(function(b) { if (b.textContent.toLowerCase().indexOf(tab.substring(0,3)) !== -1) b.classList.add('active'); });
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.style.boxShadow = '0 0 0 2px var(--nike-orange)';
+      setTimeout(function() { el.style.boxShadow = ''; }, 2500);
+    }
+  }, 100);
+}
 
 function toggleDetail(id) {
   const panel = document.getElementById('detail-' + id);
